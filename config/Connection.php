@@ -1,12 +1,12 @@
 <?php
 
-class Dabatase {
+class Connection {
 
     //Parameters
     private const SERVERHOST = '127.0.0.1:90';
     private const SERVERUSER = 'root';
     private const SERVERPASSWORD = '';
-    private const DBNAME = 'mypractice';
+    private const DBNAME = 'my_kitchen_db';
     private $conn;
 
     //METHOD GETTERS
@@ -24,7 +24,14 @@ class Dabatase {
             echo `Connection Error: {$e}`;
         }
         
-        return $this->connDB;
+        return $this->conn;
+    }
+
+    protected function closeConn(){
+        if($this->conn !== null) {
+            $this->conn = null;
+        }
+        
     }
 
 }
