@@ -50,17 +50,21 @@ class Database extends Connection {
     //Update record on DB
     public function putRequest($sqlString, $param){ 
         if($this->sqlIsValid($sqlString)){
-            self::$stmt->execute($param);
-            $this->closeConn();
+            if(self::$stmt->execute($param)) {
+                return array("executed" => true);
+            }
         }
+        return array("executed" => false, "message" => "Error: .\n" . self::$stmt->error );
     }
 
     //Delete record from DB
     public function deleteRequest($sqlString, $param){ 
         if($this->sqlIsValid($sqlString)){
-            self::$stmt->execute($param);
-            $this->closeConn();
+            if(self::$stmt->execute($param)) {
+                return array("executed" => true);
+            }
         }
+        return array("executed" => false, "message" => "Error: .\n" . self::$stmt->error );
     }
 
     //Check if string is a valid SQL statement

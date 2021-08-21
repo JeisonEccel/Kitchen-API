@@ -11,12 +11,29 @@ class Util{
         return implode($columns, ",");
     }
 
-    public function convertAssocToArray($assocArray){
-        $values = array();
+    public function getColumnPlaceholders($inputs){
+        $columns = array();
         
-        foreach($assocArray as $value){
-            array_push($values, $value);
+        foreach($inputs as $input => $value){
+            array_push($columns, ":".$input);
         }
-        return $values;
+        return implode($columns, ",");
+    }
+
+    public function extractSetValues($inputs){
+        $setValues = array();
+        foreach($inputs as $key => $value){
+            if($key !== 'id'){
+                array_push($setValues, $key." = :".$key);
+            }
+        }
+        return implode($setValues, ", ");
+    }
+
+    public function validateData($inputs){
+        foreach($inputs as $key => $value){
+            $inputs[$key] = trim(htmlspecialchars(strip_tags($value)));
+        }
+        return $inputs;
     }
 }
