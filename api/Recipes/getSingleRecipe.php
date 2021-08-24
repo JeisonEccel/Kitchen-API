@@ -4,19 +4,19 @@
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
 
-    include_once '../../models/Ingredients.php';
+    include_once '../../models/Recipes.php';
 
     // Instantiate class to get records
-    $ingredients = new Ingredients();
+    $recipes = new Recipes();
     
     // Get Data
     $id = isset($_GET['id']) ? $_GET['id']: die();
 
-    // Query ingredients
-    $result = $ingredients->getSingleIngredient($id);
+    // Query recipes
+    $result = $recipes->getSingleRecipe($id);
 
     if($result["exist"]){
         echo json_encode($result["values"]);
     }else{
-        echo json_encode(array('message' => 'No ingredient found.'));
+        echo json_encode(array('message' => 'No recipe found.'));
     }

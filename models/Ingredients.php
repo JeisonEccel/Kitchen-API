@@ -7,11 +7,6 @@ class Ingredients {
     private $database;
     private $util;
 
-    private $id;
-    private $description;
-    private $available;
-
-
     public function __construct(){
         $this->database = new Database();
         $this->util = new Util();
@@ -23,8 +18,8 @@ class Ingredients {
     }
 
     public function getSingleIngredient($id){
-        $sql = 'SELECT * FROM ingredients WHERE id = ?';
-        $values = array($id);
+        $sql = 'SELECT * FROM ingredients WHERE id = :id';
+        $values = array("id" => $id);
         return $this->database->getRequestSingle($sql, $values);
     }
 
