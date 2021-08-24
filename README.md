@@ -1,2 +1,2 @@
 # myKitchen
- Learning how to create RestApi using PHP, and using React as front end.
+ Learning how to create RestApi using PHP, connecting to MySQL database.
