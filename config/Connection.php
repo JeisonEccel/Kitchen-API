@@ -1,37 +1,44 @@
 <?php
 
-class Connection {
+require_once __DIR__ . '/../vendor/autoload.php';
+
+class Connection
+{
 
     //Parameters
-    private const SERVERHOST = '127.0.0.1:90';
-    private const SERVERUSER = 'root';
-    private const SERVERPASSWORD = '';
-    private const DBNAME = 'my_kitchen_db';
     private $conn;
 
-    //METHOD GETTERS
-    private function getDNS(){
-        return 'mysql:hots='.self::SERVERHOST.';dbname='.self::DBNAME;
+    public function __construct()
+    {
+        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+        $dotenv->safeLoad();
     }
-    protected function getConn(){
+
+    //METHOD GETTERS
+    protected function getDNS()
+    {
+        return 'mysql:host=' . $_ENV["SERVER_HOST"] . ';dbname=' . $_ENV["DBNAME"];
+    }
+    protected function getConn()
+    {
         $this->conn = null;
+        echo "Password is " . $_ENV["SERVER_PASSWORD"];
 
         try {
-            $this->conn = new PDO($this->getDNS(), self::SERVERUSER, self::SERVERPASSWORD);
+            $this->conn = new PDO($this->getDNS(), $_ENV["SERVER_USER"], $_ENV["SERVER_PASSWORD"]);
             $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $e ){
+        } catch (PDOException $e) {
             echo `Connection Error: {$e}`;
         }
-        
+
         return $this->conn;
     }
 
-    protected function closeConn(){
-        if($this->conn !== null) {
+    protected function closeConn()
+    {
+        if ($this->conn !== null) {
             $this->conn = null;
         }
-        
     }
-
 }
